@@ -5,11 +5,9 @@
 </template>
 
 <script>
-import StuTestt from '../stu_test/StuTestt.vue'
+
 export default {
-    components: {
-        StuTestt
-    }
+    
 }
 </script>
 

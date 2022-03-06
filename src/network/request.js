@@ -1,18 +1,34 @@
 import axios from 'axios'
+import router from '../router';
 
 export function request(config) {
   const instance = axios.create({
-    baseURL: 'http://118.31.78.224:20001',
+    baseURL: 'http://192.168.52.106:8089/',
     timeout: 5000
   })
-  // console.log(config);
+
+  instance.interceptors.request.use(
+    config => {
+      if (localStorage.getItem('token')) {
+        
+        config.headers.token = localStorage.getItem('token');
+      }
+   
+      return config;
+    },
+    error => {
+      return Promise.reject(error);
+    });
+
+    instance.interceptors.response.use(res => {
+      console.log(res.data);
+        if (res.data.msg == 404) {
+          router.push('/lost')
+        }
+        return res
+    }, err => {
+        console.log(err);
+    })
+
   return instance(config)
 }
-
-  // created() {
-  //   request({
-  //     url: '/Apple/listAllApple',
-  //   }).then(res => {
-  //     console.log(res);
-  //   })
-  // },

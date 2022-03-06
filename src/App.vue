@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-cloak>
       <router-view></router-view>
   </div>
 </template>
@@ -8,7 +8,14 @@
 
 
 export default {
-  name: 'App'
+  name: 'App',
+  provide() {
+    
+  },
+  methods: {
+   
+    
+  },
 }
 </script>
 
@@ -19,6 +26,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+
 
 * {
   margin: 0;

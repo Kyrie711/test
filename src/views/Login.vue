@@ -4,16 +4,16 @@
     <div class="bottom"></div>
     <div class="center">
       <h2>请登录</h2>
-      <input class="input" type="text" placeholder="用户名"/>
-      <input class="input" type="password" placeholder="密码"/>
+      <input class="input" v-model="loginForm.username" type="text" placeholder="账号"/>
+      <input class="input" v-model="loginForm.password" type="password" placeholder="密码"/>
 
       <div class="radio">
           <div>
-            <input type="radio" id="teacher" value="teacher" v-model="radio">
+            <input type="radio" id="teacher" value="老师" v-model="radio">
             <label for="teacher">教师</label>
           </div>
           <div>
-            <input type="radio" id="student" value="student" v-model="radio">
+            <input type="radio" id="student" value="学生" v-model="radio">
             <label for="student">学生</label>
           </div>
       </div>
@@ -25,29 +25,69 @@
 
 <script>
 import {request} from '../network/request.js'
+import { mapMutations } from 'vuex';
 
 export default {
   name: 'Login',
   data() {
     return {
-      radio: ''
+      radio: '',
+      loginForm: {
+        username: '',
+        password: ''
+      }
     }
   },
   methods: {
+    ...mapMutations(['changeLogin']),
     login() {
-      if (this.radio === 'teacher') {
-        this.$router.push('/teacher')
+      let _this = this;
+      if (this.loginForm.username === '' || this.loginForm.password === '') {
+        alert('账号或密码不能为空');
       } else {
-        this.$router.push('/student')
+          let data = {
+          name: this.loginForm.username,
+          password: this.loginForm.password,
+          capacity: this.radio
+        }
+        console.log(data);
+        data = new URLSearchParams(data)
+        request({
+          method: 'post',
+          url: '/login',
+          data
+        }).then(res => {
+          console.log(res.data);
+          _this.userToken = res.data.token;
+          _this.changeLogin({ token: _this.userToken });
+          if (res.data.msg == "认证失败") {
+            alert('账号或密码错误');
+          } else {
+            if (res.data.capacity == "老师") {
+            this.$router.push('/teacher')
+          } else if(res.data.capacity == "学生") {
+            this.$router.push('/student')
+          }
+          alert('登陆成功');
+          }
+          
+        }).catch(error => {
+          alert('账号或密码错误');
+          console.log(error);
+        });
       }
+    }
+  },
+
+  
+
+
     // request({
     //   url: '/Apple/listAllApple',
     // }).then(res => {
     //   console.log(res);
     // })
-  
-    }
-  }
+
 }
 </script>
 

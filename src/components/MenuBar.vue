@@ -50,9 +50,10 @@ ul {
   flex-direction: column;
   align-items: start;
   list-style-type: none;
-  background-color: #1A1E23;
-  height: 100%;
+  background-color: rgb(250, 251, 255);
+  height: 100%;  
   justify-content: center;
+  box-shadow: 1px 1px 4px #a9c9d1;
 }
 ul li {
     width: 100px;
@@ -62,9 +63,11 @@ ul li a {
     cursor: pointer;
   position: relative;
   display: block;
+  box-sizing: border-box;
+  /* border-right: solid 4px #fff; */
   padding: 4px 0;
   font-family: Lato, sans-serif;
-  color: #ecf0f1;
+  color: #678086;
   text-decoration: none;
   text-transform: uppercase;
   transition: 0.5s;

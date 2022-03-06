@@ -21,7 +21,7 @@
         <el-input type="number" name="" id="" v-model="phone" />
       </el-descriptions-item>
 
-      <el-descriptions-item label="所选课程">
+      <el-descriptions-item label="教授课程">
         <!-- <el-input type="text" v-model="lessons" /> -->
          <el-select v-model="lessons" multiple placeholder="请选择">
           <el-option
@@ -37,7 +37,7 @@
         <el-input type="text" v-model="college" />
       </el-descriptions-item>
 
-      <el-descriptions-item label="学号">
+      <el-descriptions-item label="工号">
         <el-input type="number" name="" id="" v-model="id" />
       </el-descriptions-item>
     </el-descriptions>
@@ -55,8 +55,8 @@ export default {
           phone: this.$route.query.phone,
           college: this.$route.query.college,
           id: this.$route.query.id,
-          lessons: this.$route.query.lessons,
           iid: this.$route.query.iid,
+          lessons: this.$route.query.lessons,
           options: [{
             label: '计算机操作系统'
           }, {
@@ -81,20 +81,18 @@ export default {
                 id: this.id,
                 iid: this.iid
       }
-      console.log(data);
       data = new URLSearchParams(data)
-      console.log(data);
       request({
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         method: 'post',  
-        url: "/student/save",
+        url: "/teacher/save",
         data
       }).then((res) => {
           
         console.log(res);
-        this.$router.push('/student')
+        this.$router.push('/teacher')
         
       });
     },
@@ -103,10 +101,9 @@ export default {
 </script>
 
 <style scoped>
-
 .save {  
   margin-right: 50px;
-  float: right;    /* 9999999999999999999 */
+  float: right;    
   padding-top: 10px;
   height: 90px;
 }
@@ -124,6 +121,7 @@ export default {
   height: 100px; 
   background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
 }
+
 
 .info {
   position: relative;
